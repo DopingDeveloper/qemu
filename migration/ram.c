@@ -2290,9 +2290,12 @@ static void *do_data_decompress(void *opaque)
              * not a problem because the dirty page will be retransferred
              * and uncompress() won't break the data in other pages.
              */
+            /*
             uncompress((Bytef *)des, &pagesize,
                        (const Bytef *)param->compbuf, len);
-
+            */
+            LZ4_decomperss_safe((const Bytef *)param->compbuf, (Bytef *)des,
+                        len, &pagesize);
             qemu_mutex_lock(&decomp_done_lock);
             param->done = true;
             qemu_cond_signal(&decomp_done_cond);

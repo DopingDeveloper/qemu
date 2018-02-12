@@ -640,8 +640,12 @@ ssize_t qemu_put_compression_data(QEMUFile *f, const uint8_t *p, size_t size,
             return -1;
         }
     }
+    /*
     if (compress2(f->buf + f->buf_index + sizeof(int32_t), (uLongf *)&blen,
                   (Bytef *)p, size, level) != Z_OK) {
+    */
+    if (LZ4_compress_fast((Bytef *)p, size, f->buf + f->buf_index + sizeof(int32_t),
+                (uLongf *)&blen, level) == 0) {
         error_report("Compress Failed!");
         return 0;
     }
