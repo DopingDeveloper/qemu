@@ -23,6 +23,7 @@
  */
 #include "qemu/osdep.h"
 #include <zlib.h>
+#include "migration/lz4.h"
 #include "qemu-common.h"
 #include "qemu/error-report.h"
 #include "qemu/iov.h"
